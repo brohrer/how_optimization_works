@@ -1,3 +1,6 @@
 *.png
 *.mp4
 *.gif
+
+frames/*
+output/*
