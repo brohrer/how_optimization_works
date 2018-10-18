@@ -55,11 +55,11 @@ class ChangeVisualizer(object):
         self.loss_surface()
         self.finalize_plot(filename="mnm_count_by_weight.png")
 
-    def initialize_plot(self) -> Any:
+    def initialize_plot(self, num=9334) -> Any:
         """
         Returns a Figure with two subplots.
         """
-        fig = plt.figure(num=9334, figsize=(8, 4.5))
+        fig = plt.figure(num=num , figsize=(8, 4.5))
         fig.clf()
         plt.style.use("dark_background")
         return fig
@@ -158,6 +158,10 @@ class ChangeVisualizer(object):
         -------
         Axis: The pyplot Axis the will contain the scatter plot.
         """
+        if ax is None:
+            self.initialize_plot(num=34687)
+            ax = plt.gca()
+
         ax.plot(
             self.data[:, 0],
             self.data[:, 1],
@@ -428,6 +432,7 @@ class ChangeVisualizer(object):
                 color="blue",
                 marker=".",
                 s=self.marker_large,
+                zorder=1e6,
             )
 
             filename = "mnm_weight_by_time_" + str(int(frame_number)) + ".png"
@@ -508,21 +513,25 @@ def clear_pngs(dirname: str = None) -> None:
 
 
 def main():
-    # viz = ChangeVisualizer()
+    viz = ChangeVisualizer()
 
+    viz.scatter()
+    plt.savefig("mnm_change.png", dpi=300)
     # viz.sweep_before(before_start=.851, before_stop=.975)
     # viz.sweep_after(after_start=.871, after_stop=.999)
     # viz.sweep_shift()
+    """
     filenames = [
         "mnm_before_weights_sweep.mp4",
         "mnm_after_weights_sweep.mp4",
-        # "mnm_shift_sweep.mp4",
+        "mnm_shift_sweep.mp4",
     ]
     for filename in filenames:
         tools.convert_to_gif(
             filename=filename,
             dirname="output",
         )
+    """
     return
 
 
